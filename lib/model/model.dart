@@ -49,8 +49,8 @@ class Coord{
   Coord({required this.long,required this.lati});
 
   factory Coord.fromjson(Map <String,dynamic>json){
-    return Coord(lati: json["lon"] ?? 'no longitude found',
-    long: json["lat"] ?? 'no latitude found'
+    return Coord(lati: json["lat"] ?? 'no longitude found',
+    long: json["lon"] ?? 'no latitude found'
     );
   }
 }

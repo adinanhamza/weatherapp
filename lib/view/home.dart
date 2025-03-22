@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'package:weatherapp/controller/provider.dart';
 
 class WeatherApp extends StatefulWidget {
   @override
@@ -12,35 +14,47 @@ class _WeatherAppState extends State<WeatherApp> {
   String _weatherCondition = "Sunny";
   int _humidity = 65;
   double _windSpeed = 5.8;
+@override
+void initState(){
+Future.microtask((){
+Provider.of<weatherprovider>(context,listen: false).getweatherdata('malappuram');
+super.initState();
+});
+}
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color(0xFF1D2671),
-              Color(0xFFC33764),
-            ],
-          ),
-        ),
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildAppBar(),
-                SizedBox(height: 30),
-                _buildWeatherMain(),
-                SizedBox(height: 40),
-                _buildWeatherDetails(),
-                SizedBox(height: 30),
-                _buildSearchBar(),
-              ],
+      body: Consumer<weatherprovider>(
+        builder: (context, value, child) => 
+         SingleChildScrollView(
+          child: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Color(0xFF1D2671),
+                  Color(0xFFC33764),
+                ],
+              ),
+            ),
+            child: SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildAppBar(),
+                    SizedBox(height: 30),
+                    _buildWeatherMain(),
+                    SizedBox(height: 40),
+                    _buildWeatherDetails(),
+                    SizedBox(height: 30),
+                    _buildSearchBar(),
+                  ],
+                ),
+              ),
             ),
           ),
         ),
@@ -111,19 +125,22 @@ class _WeatherAppState extends State<WeatherApp> {
   }
 
   Widget _buildWeatherDetails() {
-    return Container(
-      padding: EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Colors.white24,
-        borderRadius: BorderRadius.circular(15),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          _buildDetailItem(Icons.opacity, 'Humidity', '$_humidity%'),
-          _buildDetailItem(Icons.air, 'Wind', '${_windSpeed.toStringAsFixed(1)} km/h'),
-          _buildDetailItem(Icons.visibility, 'Visibility', '10 km'),
-        ],
+    return Consumer<weatherprovider>(
+      builder: (context, providervalue, child) => 
+       Container(
+        padding: EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: Colors.white24,
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            _buildDetailItem(Icons.opacity, 'Humidity', '${providervalue.weatherdata.single.main?.humidity}%'),
+            _buildDetailItem(Icons.air, 'Wind', '${_windSpeed.toStringAsFixed(1)} km/h'),
+            _buildDetailItem(Icons.visibility, 'Visibility', '10 km'),
+          ],
+        ),
       ),
     );
   }
