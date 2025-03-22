@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
@@ -21,7 +23,7 @@ class _homeState extends State<Home> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<weatherprovider>(context, listen: false)
-          .getweatherdata("malappuram");
+          .getweatherdata("New York");
     });
   }
   @override
@@ -67,7 +69,11 @@ _buildDetails(providerdata.first)
     else
     Center(child: Text('No weather data'),),
     SizedBox(height: 40,),
-    _buildSearchBar(value),
+   _buildSearchBar(value),
+      SizedBox(height: 40,),
+      _buildFullWeatherInfo(providerdata.first),
+      SizedBox(height: 40,),
+      
                 ],
               ),
                      ),
@@ -188,7 +194,7 @@ Widget _buildDetails(weathermodel providerdata) {
     );
   }
 
-    Widget _buildSearchBar(weatherprovider provider) {
+    Widget _buildSearchBar(weatherprovider providerdata) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 15),
       decoration: BoxDecoration(
@@ -206,9 +212,11 @@ Widget _buildDetails(weathermodel providerdata) {
                 hintStyle: TextStyle(color: Colors.white54),
                 border: InputBorder.none,
               ),
-              onSubmitted: (value) {
+              onSubmitted: (value) async{
                 if (value.isNotEmpty) {
-                  provider.getweatherdata(value);
+           await       providerdata.getweatherdata(value.toString().trim());
+    print('from submit $value');
+
                   _searchController.clear();
                 }
               },
@@ -216,9 +224,9 @@ Widget _buildDetails(weathermodel providerdata) {
           ),
           IconButton(
             icon: Icon(Icons.search, color: Colors.white),
-            onPressed: () {
+            onPressed: ()async {
               if (_searchController.text.isNotEmpty) {
-                provider.getweatherdata(_searchController.text);
+           await     providerdata.getweatherdata(_searchController.text.trim());
                 _searchController.clear();
               }
             },

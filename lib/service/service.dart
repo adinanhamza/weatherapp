@@ -16,6 +16,7 @@ class ApiService {
   Future<weathermodel>fetchdata(String place)async{
 
      String url = 'https://api.openweathermap.org/data/2.5/weather?q=$place&appid=218ebbb372884cecfd15fecc029d35cb&units=metric';
+     log('place from api : $place');
     final response = await dio.get(url);
     try {
       if(response.statusCode == 200){
