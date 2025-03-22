@@ -24,7 +24,7 @@ int groundlevel;
 int humidity;
 int timezone;
 int visibility;
-String name;
+String? name;
 Main({required this.temp,required this.humidity,required this.groundlevel,required this.pressure,required this.sealevel,required this.name,required this.timezone,required this.visibility});
 
 factory Main.fromjson(Map<String,dynamic>json){
