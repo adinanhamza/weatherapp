@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:flutter/widgets.dart';
 import 'package:weatherapp/model/model.dart';
 import 'package:weatherapp/service/service.dart';
@@ -14,9 +15,10 @@ bool isloading = false;
     try {
       weathermodel data = await apiService.fetchdata(place);
       weatherdata = [data];
-
+log('provider data : $weatherdata');
     } catch (e) {
-      throw Exception( 'erre$e');
+      // throw Exception( 'erre on pro function $e');
+      log('error provider $e');
     }finally{
       isloading = false;
       notifyListeners();

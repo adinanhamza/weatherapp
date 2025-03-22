@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => weatherprovider(),
       child: MaterialApp(
-        home: WeatherApp(),
+        home: Home(),
       ),
     );
   }
