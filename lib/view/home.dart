@@ -39,8 +39,10 @@ class _homeState extends State<Home> {
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    Color(0xFF1D2671),
-                    Color(0xFFC33764),
+                    Color.fromARGB(255, 9, 194, 185),
+                    Color.fromARGB(255, 6, 48, 145),
+                    //    Color(0xFF1D2671),
+                    // Color(0xFFC33764),
                   ],
                 ),
               ),
